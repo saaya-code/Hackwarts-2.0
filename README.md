@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackwarts 2.0
 
-## Getting Started
+## Prerequisites
 
-First, run the development server:
+- **Node.js** (version 18.x or later)
+- **npm** or **yarn** or **pnpm**
+
+## Setup Instructions
+
+### 1. Clone the Repository
 
 ```bash
+git clone https://github.com/Google-Developer-Student-Clubs-ISSATSo/Hackwarts-2.0.git
+cd Hackwarts-2.0
+```
+
+### 2. Install Dependencies
+
+```bash
+# Using npm
+npm install
+
+# Or using yarn
+yarn install
+
+# Using pnpm
+pnpm install
+```
+
+### 3. Run Development Server
+
+```bash
+# Using npm
 npm run dev
-# or
+
+# Or using yarn
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Or using pnpm
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Using npm
+npm run build
 
-## Learn More
+# Or using yarn
+yarn build
 
-To learn more about Next.js, take a look at the following resources:
+# Using pnpm
+pnpm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 6. Start Production Server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Using npm
+npm start
 
-## Deploy on Vercel
+# Or using yarn
+yarn start
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Using npm
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Troubleshooting
+
+- Clear npm/yarn/pnpm cache if you encounter dependency issues
+- Verify your Node.js installation
+- Check error logs for specific configuration problems/create-next-app).
