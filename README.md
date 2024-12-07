@@ -73,3 +73,30 @@ pnpm start
 - Clear npm/yarn/pnpm cache if you encounter dependency issues
 - Verify your Node.js installation
 - Check error logs for specific configuration problems/create-next-app).
+
+## Design Document
+
+### Naming convetions
+
+- We use PascalCase for components & types + camelCase for variables and functions.
+- We use kebab-case for file and folder names.
+
+### Libraries & Tools
+
+- **Next.js**: React framework for production.
+- **TypeScript**: Typed JavaScript.
+- **Tailwind CSS**: Utility-first CSS framework.
+- **ESLint**: Linter for code quality.
+- **Prettier**: Code formatter.
+
+- **Zod**: TypeScript-first schema declaration and validation library.
+- **React Hook Form**: Performant, flexible and extensible forms with easy-to-use validation.
+- **React Query**: Data fetching library for React.
+- **Zustand**: State management for React.
+- **Shadcn-ui**: React component library.
+
+### Database & API
+
+- **MongoDB**: NoSQL database.
+- **Mongoose**: MongoDB object modeling for Node.js.
+- **NextAuth.js**: Authentication library for Next.js.
