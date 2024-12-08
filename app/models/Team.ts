@@ -10,6 +10,7 @@ interface Member {
 export interface ITeam extends Document {
   name: string;
   leader_name: string;
+  leader_email: string;
   members: Member[];
   house: "Gryffindor" | "Hufflepuff" | "Ravenclaw" | "Slytherin";
   selected_challenges: mongoose.Types.ObjectId[];
@@ -26,6 +27,7 @@ const teamSchema = new Schema<ITeam>(
   {
     name: { type: String, required: true },
     leader_name: { type: String, required: true },
+    leader_email: { type: String, required: true },
     members: { type: [memberSchema], default: [] },
     house: {
       type: String,
