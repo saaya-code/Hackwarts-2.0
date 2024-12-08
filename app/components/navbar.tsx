@@ -5,11 +5,12 @@ import { LogIn, Users } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
+
 import { Button } from "@/components/ui/button";
 const Navbar = () => {
   return (
     <div className="fixed z-40 top-4 left-4 right-4 box-border mt-4">
-      <nav className="flex items-center justify-between relative w-full h-full py-2 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
+      <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-2 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
         {/* Baroque border design */}
         <Image
           src={baroqueBorder}
@@ -38,7 +39,6 @@ const Navbar = () => {
             width={150}
             height={150}
             alt="Hackwarts logo"
-            className=""
           />
         </div>
         <div className="flex items-center gap-2 relative z-10">
