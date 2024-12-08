@@ -1,12 +1,10 @@
 import mongoose, { Document, Schema, Model } from "mongoose";
 
-// Interface for a Team Member
 interface Member {
   name: string;
   email: string;
 }
 
-// Interface for the Team Document
 export interface ITeam extends Document {
   name: string;
   leader_name: string;
