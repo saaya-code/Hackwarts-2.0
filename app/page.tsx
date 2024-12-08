@@ -1,101 +1,187 @@
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, MapPinned, Scroll, Wand } from "lucide-react";
+
+import issat from "@/public/issat.png";
+import logo from "@/public/logo.png";
+import magicien from "@/public/fly.png";
+import goldenball from "@/public/goldenball.png";
+import baroqueBorder from "@/public/baroqueborder.png";
+import moon from "@/public/moon.png";
+import prize from "@/public/HogwartsHouseCup.webp";
+import gdgcissatso from "@/public/gdgcissatso.png";
+function Hero() {
+  return (
+    <div className="relative flex flex-col items-center justify-center h-screen bg-gradient-to-b from-transparent via-yellow-800 to-yellow-900 overflow-hidden">
+      <div className="relative m-5">
+        <Image src={logo} alt="Hackwarts logo" />
+        <Image
+          src={magicien}
+          alt="Magicien"
+          className="w-40 -top-14 left-1/2  md:w-60 absolute md:-top-20 md:-right-20 invert animate-sinusoidal"
+        />
+        <div className="w-full flex items-center gap-2 justify-center flex-wrap">
+          <Button
+            variant="hackwarts"
+            className="relative text-md font-semibold"
+          >
+            <Wand />{" "}
+            <Image
+              src={goldenball}
+              className="w-10 h-10 absolute animate-fly "
+              alt="challenge ball flying around the button"
+            />
+            Start casting magic
+          </Button>
+          <Button
+            variant="hackwarts"
+            className="text-md font-bold bg-white text-amber-800"
+          >
+            <Scroll /> List of challenges
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Location() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 m-6 py-6 relative border-t-2 border-b-2 border-yellow-500 mt-28">
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute -top-4 -left-2 h-12 w-auto"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -bottom-4 -left-2 -scale-y-100"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -top-4 -right-2 -scale-x-100"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
+      />
+      <div className="flex flex-col gap-2 justify-center p-10">
+        <h2 className="text-7xl text-harryp">Time & Location</h2>
+        <p className="text-xl flex items-center gap-2">
+          <MapPinned className="w-5 h-5" /> You can find us at ISSAT University
+          Sousse, Tunisia
+        </p>
+        <p className="text-xl flex items-center gap-2">
+          <Calendar className="w-5 h-5" /> The event will take place on 16th
+          December 2024
+        </p>
+        <p className="text-xl flex items-center gap-2">
+          <Clock /> From 10:00 to 18:00 Next Day
+        </p>
+        <p className="text-xl font-thin">
+          Bring your own wand, and don't forget to wear your wizard hat and the
+          secret ingredient, coffee!
+        </p>
+        <Button
+          variant="hackwarts"
+          className="w-fit mt-4 text-lg font-semibold"
+        >
+          <Wand /> Start Casting Magic
+        </Button>
+      </div>
+      <div className="relative flex items-center justify-center">
+        <Image src={issat} alt="ISSAT University Sousse" />
+        <Image
+          src={goldenball}
+          alt="Golden ball"
+          className="w-60 absolute top-0 left-10 animate-sinusoidal"
+        />
+      </div>
+    </div>
+  );
+}
+
+function Prize() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 m-6 py-6 relative border-t-2 border-b-2 border-yellow-500 p-6 mt-28">
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute -top-4 -left-2 h-12 w-auto"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -bottom-4 -left-2 -scale-y-100"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -top-4 -right-2 -scale-x-100"
+      />
+      <Image
+        src={baroqueBorder}
+        alt="Baroque border"
+        className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
+      />
+      <div className="flex items-center justify-center relative">
+        <Image src={moon} alt="Moon" className="w-96" />
+        <div className="rotate-12 absolute top-4 right-28">
+          <Image
+            src={prize}
+            alt="Hogwarts House Cup"
+            className="w-52 animate-sinusoidal"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 justify-center p-10">
+        <h2 className="text-7xl text-harryp">One Night Lots of Prizes!</h2>
+
+        <p className="text-xl font-thin">
+          Win lots of prizes and learn new spells and potions. The house with
+          the most points will win the Hogwarts Prize.
+        </p>
+        <Button
+          variant="hackwarts"
+          className="w-fit mt-4 text-lg font-semibold"
+        >
+          <Wand /> Start Casting Magic
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="flex flex-col items-center justify-center py-6 mt-12 bg-yellow-900 text-white">
+      <div className="flex items-center gap-4">
+        <Image src={logo} alt="Hackwarts logo" className="w-28 mb-2" />
+        <Image
+          src={gdgcissatso}
+          alt="GDGC IssatSO Logo"
+          className="w-28 mb-2 "
+        />
+      </div>
+      <p className="text-sm">
+        &copy; {new Date().getFullYear()} Hackwarts GDGC. All rights reserved.
+      </p>
+    </footer>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div>
+      <Hero />
+      <Location />
+      <Prize />
+      <h1 className="text-6xl text-harryp text-center mt-12">And more...</h1>
+      <Footer />
     </div>
   );
 }
