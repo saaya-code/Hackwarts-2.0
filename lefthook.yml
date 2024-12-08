@@ -1,0 +1,5 @@
+# lefthook.yml
+post-merge:
+  commands:
+    install:
+      run: npm install
