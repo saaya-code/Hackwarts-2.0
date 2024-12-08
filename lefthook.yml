@@ -7,4 +7,4 @@ post-merge:
 post-checkout:
   commands:
     install:
-      run: bun install
+      run: npm install
