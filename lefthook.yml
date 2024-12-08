@@ -3,3 +3,8 @@ post-merge:
   commands:
     install:
       run: npm install
+
+post-checkout:
+  commands:
+    install:
+      run: bun install
