@@ -1,18 +1,20 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPinned, Scroll, Wand } from "lucide-react";
+import Image from "next/image";
 
+import prize from "@/public/HogwartsHouseCup.webp";
+import baroqueBorder from "@/public/baroqueborder.png";
+import magicien from "@/public/fly.png";
+import gdgcissatso from "@/public/gdgcissatso.png";
+import goldenball from "@/public/goldenball.png";
 import issat from "@/public/issat.png";
 import logo from "@/public/logo.png";
-import magicien from "@/public/fly.png";
-import goldenball from "@/public/goldenball.png";
-import baroqueBorder from "@/public/baroqueborder.png";
 import moon from "@/public/moon.png";
-import prize from "@/public/HogwartsHouseCup.webp";
-import gdgcissatso from "@/public/gdgcissatso.png";
+import Starfield from "@/components/ui/starfield";
+
 function Hero() {
   return (
-    <div className="relative flex flex-col items-center justify-center h-screen bg-gradient-to-b from-transparent via-yellow-800 to-yellow-900 overflow-hidden">
+    <div className="relative flex flex-col items-center justify-center h-screen bg-rosewood overflow-hidden">
       <div className="relative m-5">
         <Image src={logo} alt="Hackwarts logo" />
         <Image
@@ -158,7 +160,7 @@ function Prize() {
 
 function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-center py-6 mt-12 bg-yellow-900 text-white">
+    <footer className="flex flex-col items-center justify-center py-6 mt-12 bg-rosewood text-white">
       <div className="flex items-center gap-4">
         <Image src={logo} alt="Hackwarts logo" className="w-28 mb-2" />
         <Image
@@ -177,6 +179,7 @@ function Footer() {
 export default function Home() {
   return (
     <div>
+      <Starfield />
       <Hero />
       <Location />
       <Prize />

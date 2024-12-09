@@ -1,16 +1,75 @@
-import React from "react";
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
-import { LogIn, Users } from "lucide-react";
+import { LogIn, Menu, Users, X } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
+import magehat from "@/public/magehat.png";
 
-import { Button } from "@/components/ui/button";
-const Navbar = () => {
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+function MobileMenu({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed z-40 top-4 left-4 right-4 box-border mt-4">
-      <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-2 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
+    <div className="fixed inset-0 z-40 backdrop-blur bg-black bg-opacity-35 pointer-events-none flex flex-col items-center justify-center p-4 overflow-y-auto">
+      <div className="z-50 w-full max-w-sm bg-[#F3E5AB] bg-blend-multiply bg-cover bg-center rounded-lg p-8 transform rotate-1 shadow-xl border-4 border-[#8E6F3E] relative pointer-events-auto">
+        <Image
+          src={magehat}
+          alt="A blue mage hat"
+          className="w-32 h-32 absolute -top-16 -left-12 -rotate-[20deg] "
+        />
+        <Button
+          variant="hackwarts"
+          className="absolute top-2 right-2"
+          onClick={onClose}
+        >
+          <X className="w-6 h-6" />
+        </Button>
+        <h2 className="text-6xl font-bold text-[#4A0E0E] text-center mb-6 font-serif text-harryp">
+          Menu
+        </h2>
+        <Link
+          className={cn(
+            "w-full",
+            buttonVariants({
+              variant: "hackwarts",
+              size: "lg",
+              className: "mb-4 bg-amber-600 text-amber-950",
+            })
+          )}
+          href="/login"
+          onClick={onClose}
+        >
+          <LogIn className="w-6 h-6" /> Login
+        </Link>
+        <Link
+          className={cn(
+            "w-full",
+            buttonVariants({
+              variant: "hackwarts",
+              size: "lg",
+              className: "mb-4",
+            }),
+            "bg-[#6f2f2a] text-yellow-400 "
+          )}
+          href="/register"
+          onClick={onClose}
+        >
+          <Users className="w-6 h-6" /> Register Team
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+const Navbar = () => {
+  const [toggle, setToggle] = useState(false);
+  return (
+    <div className="fixed z-40 top-0 left-4 right-4 box-border mt-4">
+      <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-1 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
         {/* Baroque border design */}
         <Image
           src={baroqueBorder}
@@ -41,16 +100,30 @@ const Navbar = () => {
             alt="Hackwarts logo"
           />
         </div>
-        <div className="flex items-center gap-2 relative z-10">
+        <div className="hidden md:flex items-center gap-2 relative z-10">
           <Button variant="hackwarts" className="bg-amber-600 text-amber-950">
             <LogIn className="w-4 h-4" /> Login
           </Button>
-          <Button variant="hackwarts">
-            <Users className="w'4 h-4" />
-            Register Team
+          <Link href="/register">
+            <Button variant="hackwarts">
+              <Users className="w'4 h-4" />
+              Register Team
+            </Button>
+          </Link>
+        </div>
+        <div className="block md:hidden">
+          <Button
+            onClick={() => {
+              setToggle((prev) => !prev);
+            }}
+            variant="hackwarts"
+            className="bg-amber-600 text-amber-950"
+          >
+            <Menu className="w-6 h-6" />
           </Button>
         </div>
       </nav>
+      {toggle && <MobileMenu onClose={() => setToggle(false)} />}
     </div>
   );
 };
