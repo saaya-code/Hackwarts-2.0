@@ -8,8 +8,8 @@ import magicien from "@/public/fly.png";
 import goldenball from "@/public/goldenball.png";
 import baroqueBorder from "@/public/baroqueborder.png";
 import moon from "@/public/moon.png";
-import prize from "@/public/HogwartsHouseCup.webp";
-import gdgcissatso from "@/public/gdgcissatso.png";
+import Starfield from "@/components/ui/starfield";
+
 function Hero() {
   return (
     <div className="relative flex flex-col items-center justify-center h-screen bg-gradient-to-b from-transparent via-yellow-800 to-yellow-900 overflow-hidden">
@@ -177,6 +177,7 @@ function Footer() {
 export default function Home() {
   return (
     <div>
+      <Starfield />
       <Hero />
       <Location />
       <Prize />
