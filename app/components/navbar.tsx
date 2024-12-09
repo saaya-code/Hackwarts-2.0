@@ -121,12 +121,14 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
-          <Link href="/challenges">
-            <Button variant="hackwarts">
-              <Swords className="w'4 h-4" />
-              Challenges
-            </Button>
-          </Link>
+          {session && (
+            <Link href="/challenges">
+              <Button variant="hackwarts">
+                <Swords className="w'4 h-4" />
+                Challenges
+              </Button>
+            </Link>
+          )}
           <Link href="/register">
             <Button variant="hackwarts">
               <Users className="w'4 h-4" />
