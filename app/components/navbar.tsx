@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 import { LogIn, Menu, Users, X } from "lucide-react";
 
@@ -13,6 +14,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function MobileMenu({ onClose }: { onClose: () => void }) {
+  const { data: session } = useSession();
   return (
     <div className="fixed inset-0 z-40 backdrop-blur bg-black bg-opacity-35 pointer-events-none flex flex-col items-center justify-center p-4 overflow-y-auto">
       <div className="z-50 w-full max-w-sm bg-[#F3E5AB] bg-blend-multiply bg-cover bg-center rounded-lg p-8 transform rotate-1 shadow-xl border-4 border-[#8E6F3E] relative pointer-events-auto">
@@ -31,20 +33,24 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <h2 className="text-6xl font-bold text-[#4A0E0E] text-center mb-6 font-serif text-harryp">
           Menu
         </h2>
-        <Link
+        <Button
           className={cn(
             "w-full",
             buttonVariants({
               variant: "hackwarts",
               size: "lg",
               className: "mb-4 bg-amber-600 text-amber-950",
-            })
+            }),
           )}
-          href="/login"
-          onClick={onClose}
+          onClick={() => {
+            session
+              ? signOut()
+              : signIn("google", { callbackUrl: "/challenges" });
+            onClose();
+          }}
         >
-          <LogIn className="w-6 h-6" /> Login
-        </Link>
+          <LogIn className="w-6 h-6" /> {session ? "Logout" : "Login"}
+        </Button>
         <Link
           className={cn(
             "w-full",
@@ -53,7 +59,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               size: "lg",
               className: "mb-4",
             }),
-            "bg-[#6f2f2a] text-yellow-400 "
+            "bg-[#6f2f2a] text-yellow-400 ",
           )}
           href="/register"
           onClick={onClose}
@@ -66,6 +72,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 }
 
 const Navbar = () => {
+  const { data: session } = useSession();
   const [toggle, setToggle] = useState(false);
   return (
     <div className="fixed z-40 top-0 left-4 right-4 box-border mt-4">
@@ -101,8 +108,16 @@ const Navbar = () => {
           />
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
-          <Button variant="hackwarts" className="bg-amber-600 text-amber-950">
-            <LogIn className="w-4 h-4" /> Login
+          <Button
+            variant="hackwarts"
+            className="bg-amber-600 text-amber-950"
+            onClick={() =>
+              session
+                ? signOut()
+                : signIn("google", { callbackUrl: "/challenges" })
+            }
+          >
+            <LogIn className="w-4 h-4" /> {session ? "Logout" : "Login"}
           </Button>
           <Link href="/register">
             <Button variant="hackwarts">
