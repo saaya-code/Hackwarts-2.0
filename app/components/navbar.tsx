@@ -94,12 +94,14 @@ const Navbar = () => {
         />
 
         <div className="relative z-10">
-          <Image
-            src={hackwartsLogo}
-            width={150}
-            height={150}
-            alt="Hackwarts logo"
-          />
+          <Link href="/">
+            <Image
+              src={hackwartsLogo}
+              width={150}
+              height={150}
+              alt="Hackwarts logo"
+            />
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
           <Button
