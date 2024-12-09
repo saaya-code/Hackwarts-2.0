@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { LogIn, Menu, Users, X } from "lucide-react";
 
@@ -10,7 +10,6 @@ import hackwartsLogo from "@/public/logo.png";
 import magehat from "@/public/magehat.png";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 function MobileMenu({ onClose }: { onClose: () => void }) {
@@ -42,6 +41,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             })
           )}
           href="/login"
+          onClick={onClose}
         >
           <LogIn className="w-6 h-6" /> Login
         </Link>
@@ -55,7 +55,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             }),
             "bg-[#6f2f2a] text-yellow-400 "
           )}
-          href="/login"
+          href="/register"
+          onClick={onClose}
         >
           <Users className="w-6 h-6" /> Register Team
         </Link>
