@@ -10,6 +10,13 @@ export default {
   theme: {
     extend: {
       colors: {
+        sunset: "var(--sunset)",
+        licorice: "var(--licorice)",
+        lemonchiffon: "var(--lemonchiffon)",
+        blackbean: "var(--blackbean)",
+        rosewood: "var(--rosewood)",
+        copper: "var(--copper)",
+        jet: "var(--jet)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
