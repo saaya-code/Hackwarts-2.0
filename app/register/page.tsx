@@ -1,5 +1,5 @@
 "use client";
-
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import baroqueBorder from "@/public/baroqueborder.png";
 import magicien from "@/public/fly.png";
@@ -7,6 +7,10 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterPage() {
+  const handleGoogleSignIn = () => {
+    signIn("google", { callbackUrl: "/create-team" });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-rosewood to-blackbean overflow-hidden">
       <div className="max-w-2xl w-full mx-4 relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm">
@@ -52,6 +56,7 @@ export default function RegisterPage() {
           <Button
             variant="outline"
             size="lg"
+            onClick={handleGoogleSignIn}
             className="w-full max-w-sm flex items-center justify-center gap-2 text-lg 
               bg-gradient-to-r from-copper to-sunset
               text-blackbean font-bold
