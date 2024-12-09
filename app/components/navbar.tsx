@@ -34,14 +34,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           Menu
         </h2>
         <Button
-          className={cn(
-            "w-full",
-            buttonVariants({
-              variant: "hackwarts",
-              size: "lg",
-              className: "mb-4 bg-amber-600 text-amber-950",
-            }),
-          )}
+          variant="hackwarts"
+          className="bg-amber-600 text-amber-950 w-full mb-4"
           onClick={() => {
             session
               ? signOut()
