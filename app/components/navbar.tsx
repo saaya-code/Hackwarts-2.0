@@ -121,6 +121,18 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
+          <Link href="/challenges">
+            <Button variant="hackwarts">
+              <Swords className="w'4 h-4" />
+              Challenges
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button variant="hackwarts">
+              <Users className="w'4 h-4" />
+              Register Team
+            </Button>
+          </Link>
           <Button
             variant="hackwarts"
             className="bg-amber-600 text-amber-950"
@@ -132,12 +144,6 @@ const Navbar = () => {
           >
             <LogIn className="w-4 h-4" /> {session ? "Logout" : "Login"}
           </Button>
-          <Link href="/register">
-            <Button variant="hackwarts">
-              <Users className="w'4 h-4" />
-              Register Team
-            </Button>
-          </Link>
         </div>
         <div className="block md:hidden">
           <Button
