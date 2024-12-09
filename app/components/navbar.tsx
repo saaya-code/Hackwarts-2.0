@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { LogIn, Menu, Users, X } from "lucide-react";
+import { LogIn, Menu, Swords, Users, X } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
@@ -33,18 +33,23 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <h2 className="text-6xl font-bold text-[#4A0E0E] text-center mb-6 font-serif text-harryp">
           Menu
         </h2>
-        <Button
-          variant="hackwarts"
-          className="bg-amber-600 text-amber-950 w-full mb-4"
-          onClick={() => {
-            session
-              ? signOut()
-              : signIn("google", { callbackUrl: "/challenges" });
-            onClose();
-          }}
-        >
-          <LogIn className="w-6 h-6" /> {session ? "Logout" : "Login"}
-        </Button>
+        {session && (
+          <Link
+            className={cn(
+              "w-full",
+              buttonVariants({
+                variant: "hackwarts",
+                size: "lg",
+                className: "mb-4",
+              }),
+              "bg-[#6f2f2a] text-yellow-400 ",
+            )}
+            href="/challenges"
+            onClick={onClose}
+          >
+            <Swords className="w-6 h-6" /> Challenges
+          </Link>
+        )}
         <Link
           className={cn(
             "w-full",
@@ -60,6 +65,18 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         >
           <Users className="w-6 h-6" /> Register Team
         </Link>
+        <Button
+          variant="hackwarts"
+          className="bg-amber-600 text-amber-950 w-full mb-4"
+          onClick={() => {
+            session
+              ? signOut()
+              : signIn("google", { callbackUrl: "/challenges" });
+            onClose();
+          }}
+        >
+          <LogIn className="w-6 h-6" /> {session ? "Logout" : "Login"}
+        </Button>
       </div>
     </div>
   );
