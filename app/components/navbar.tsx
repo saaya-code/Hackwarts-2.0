@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { LogIn, Menu, Users, X } from "lucide-react";
 
@@ -66,8 +67,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="fixed z-40 top-4 left-4 right-4 box-border mt-4">
-      <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-2 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
+    <div className="fixed z-40 top-0 left-4 right-4 box-border mt-4">
+      <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-1 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
         {/* Baroque border design */}
         <Image
           src={baroqueBorder}
@@ -102,10 +103,12 @@ const Navbar = () => {
           <Button variant="hackwarts" className="bg-amber-600 text-amber-950">
             <LogIn className="w-4 h-4" /> Login
           </Button>
-          <Button variant="hackwarts">
-            <Users className="w'4 h-4" />
-            Register Team
-          </Button>
+          <Link href="/register">
+            <Button variant="hackwarts">
+              <Users className="w'4 h-4" />
+              Register Team
+            </Button>
+          </Link>
         </div>
         <div className="block md:hidden">
           <Button
