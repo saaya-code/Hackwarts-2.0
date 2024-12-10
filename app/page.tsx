@@ -179,7 +179,6 @@ function Footer() {
 export default function Home() {
   return (
     <div>
-      <Starfield />
       <Hero />
       <Location />
       <Prize />
