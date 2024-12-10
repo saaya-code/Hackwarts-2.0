@@ -13,11 +13,18 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  @apply bg-[#311210] text-[#edc088];
+  @apply bg-rosewood text-sunset;
 }
 
 @layer base {
   :root {
+    --sunset: #EFC283;
+    --licorice: #140A09;
+    --lemonchiffon: #FDF1C3;
+    --blackbean: #311210;
+    --rosewood: #581011;
+    --copper: #B47B2C;
+    --jet: #292B2A;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
