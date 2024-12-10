@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { LogIn, Menu, Users, X } from "lucide-react";
+import { LogIn, Menu, Swords, Users, X } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
@@ -33,18 +33,23 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <h2 className="text-6xl font-bold text-[#4A0E0E] text-center mb-6 font-serif text-harryp">
           Menu
         </h2>
-        <Button
-          variant="hackwarts"
-          className="bg-amber-600 text-amber-950 w-full mb-4"
-          onClick={() => {
-            session
-              ? signOut()
-              : signIn("google", { callbackUrl: "/challenges" });
-            onClose();
-          }}
-        >
-          <LogIn className="w-6 h-6" /> {session ? "Logout" : "Login"}
-        </Button>
+        {session && (
+          <Link
+            className={cn(
+              "w-full",
+              buttonVariants({
+                variant: "hackwarts",
+                size: "lg",
+                className: "mb-4",
+              }),
+              "bg-[#6f2f2a] text-yellow-400 "
+            )}
+            href="/challenges"
+            onClick={onClose}
+          >
+            <Swords className="w-6 h-6" /> Challenges
+          </Link>
+        )}
         {!session && (
           <Link
             className={cn(
@@ -62,6 +67,18 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             <Users className="w-6 h-6" /> Register Team
           </Link>
         )}
+        <Button
+          variant="hackwarts"
+          className="bg-amber-600 text-amber-950 w-full mb-4"
+          onClick={() => {
+            session
+              ? signOut()
+              : signIn("google", { callbackUrl: "/challenges" });
+            onClose();
+          }}
+        >
+          <LogIn className="w-6 h-6" /> {session ? "Logout" : "Login"}
+        </Button>
       </div>
     </div>
   );
@@ -96,40 +113,43 @@ const Navbar = () => {
         />
 
         <div className="relative z-10">
-          <Image
-            src={hackwartsLogo}
-            width={150}
-            height={150}
-            alt="Hackwarts logo"
-          />
+          <Link href="/">
+            <Image
+              src={hackwartsLogo}
+              width={150}
+              height={150}
+              alt="Hackwarts logo"
+            />
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
-          {!session && (
-            <>
-              <Button
-                variant="hackwarts"
-                className="bg-amber-600 text-amber-950"
-                onClick={() => signIn("google", { callbackUrl: "/challenges" })}
-              >
-                <LogIn className="w-4 h-4" /> Login
-              </Button>
-              <Link href="/register">
-                <Button variant="hackwarts">
-                  <Users className="w-4 h-4" />
-                  Register Team
-                </Button>
-              </Link>
-            </>
-          )}
           {session && (
-            <Button
-              variant="hackwarts"
-              className="bg-amber-600 text-amber-950"
-              onClick={() => signOut()}
-            >
-              <LogIn className="w-4 h-4" /> Logout
-            </Button>
+            <Link href="/challenges">
+              <Button variant="hackwarts">
+                <Swords className="w'4 h-4" />
+                Challenges
+              </Button>
+            </Link>
           )}
+          {!session && (
+            <Link href="/register">
+              <Button variant="hackwarts">
+                <Users className="w'4 h-4" />
+                Register Team
+              </Button>
+            </Link>
+          )}
+          <Button
+            variant="hackwarts"
+            className="bg-amber-600 text-amber-950"
+            onClick={() =>
+              session
+                ? signOut()
+                : signIn("google", { callbackUrl: "/challenges" })
+            }
+          >
+            <LogIn className="w-4 h-4" /> {session ? "Logout" : "Login"}
+          </Button>
         </div>
         <div className="block md:hidden">
           <Button
