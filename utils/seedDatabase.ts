@@ -61,4 +61,3 @@ const seedDataBase =  async () => {
 };
 
 seedDataBase();
-export default seedDataBase;
