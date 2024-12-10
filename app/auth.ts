@@ -5,6 +5,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google({ allowDangerousEmailAccountLinking: true })],
   pages: {
     signIn: "/register",
+    error: "/register",
   },
   session: {
     strategy: "jwt",
