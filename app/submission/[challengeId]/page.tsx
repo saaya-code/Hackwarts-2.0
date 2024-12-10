@@ -59,20 +59,23 @@ const page = () => {
         </div>
         <h1 className="text-4xl font-bold text-harryp">Project Submission</h1>
         <div className="mb-4">
-          <Label>Github Repository (Optional)</Label>
+          <Label className="text-sunset">Github Repository</Label>
           <Input
             placeholder="e.g https://www.github.com/myproject"
             className="bg-white"
           />
         </div>
         <div className="mb-4">
-          <Label>Deployment URL</Label>
+          <Label className="text-sunset">Deployment URL (Optional)</Label>
           <Input
             placeholder="e.g https://www.example.com"
             className="bg-white"
           />
         </div>
-        <Button variant="hackwarts" className="w-full">
+        <Button
+          variant="hackwarts"
+          className="w-full hover:scale-100 font-bold"
+        >
           Submit Project <CheckCircle />
         </Button>
       </div>
