@@ -1,9 +1,8 @@
 import { Challenge } from "@/app/models/Challenge";
 import { connectToDatabase } from "@/lib/mongodb";
-import Image from "next/image";
 import baroqueBorder from "@/public/baroqueborder.png";
 import goldenball from "@/public/goldenball.png";
-import Starfield from "@/components/ui/starfield";
+import Image from "next/image";
 
 async function getChallenges() {
   await connectToDatabase();

@@ -1,8 +1,8 @@
 "use client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 import { Loader, LogIn, Menu, Swords, Users, X } from "lucide-react";
 
@@ -12,7 +12,6 @@ import magehat from "@/public/magehat.png";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { stat } from "fs";
 
 function MobileMenu({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
