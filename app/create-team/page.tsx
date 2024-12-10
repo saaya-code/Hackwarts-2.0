@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
+import { createTeam } from "@/app/actions/create-team";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -42,6 +43,8 @@ export default function CreateTeam() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "", // Add this
+      house: undefined, // Add this explicitly 
       leader_name: session?.user?.name || "",
       leader_email: session?.user?.email || "",
       members: [],
@@ -98,8 +101,11 @@ export default function CreateTeam() {
       router.push("/register");
     }
     if (session?.user) {
-      form.setValue("leader_name", session.user.name || "");
-      form.setValue("leader_email", session.user.email || "");
+      form.reset({
+        ...form.getValues(),
+        leader_name: session.user.name || "",
+        leader_email: session.user.email || "",
+      });
     }
   }, [session, status]);
 
@@ -136,7 +142,23 @@ export default function CreateTeam() {
         </h1>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form 
+            onSubmit={form.handleSubmit(async (data) => {
+              const formData = new FormData()
+              // Append all form fields
+              formData.append('name', data.name)
+              formData.append('house', data.house)
+              formData.append('leader_name', data.leader_name)
+              formData.append('leader_email', data.leader_email)
+              // Handle members array
+              data.members.forEach((member, index) => {
+                formData.append(`members.${index}.name`, member.name)
+                formData.append(`members.${index}.email`, member.email)
+              })
+              await createTeam(formData)
+            })}
+            className="space-y-6"
+          >
             <FormField
               control={form.control}
               name="name"
