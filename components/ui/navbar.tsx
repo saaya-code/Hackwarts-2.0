@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { LogIn, Menu, Users, X } from "lucide-react";
+import { Loader, LogIn, Menu, Users, X } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
@@ -68,10 +68,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 }
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { status } = useSession();
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="sticky z-40 top-0 left-4 right-4 box-border p-6 mt-4">
+    <div className="relative z-40 py-3 px-1">
       <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-1 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
         {/* Baroque border design */}
         <Image
@@ -94,17 +94,20 @@ const Navbar = () => {
           alt="Baroque border"
           className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
         />
-
         <div className="relative z-10">
-          <Image
-            src={hackwartsLogo}
-            width={150}
-            height={150}
-            alt="Hackwarts logo"
-          />
+          <Link href="/">
+            <Image
+              src={hackwartsLogo}
+              width={150}
+              height={150}
+              alt="Hackwarts logo"
+            />
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-2 relative z-10">
-          {!session && (
+          {status === "loading" ? (
+            <Loader className="w-6 h-6 animate-spin" />
+          ) : status === "unauthenticated" ? (
             <>
               <Button
                 variant="hackwarts"
@@ -120,8 +123,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             </>
-          )}
-          {session && (
+          ) : (
             <Button
               variant="hackwarts"
               className="bg-amber-600 text-amber-950"
