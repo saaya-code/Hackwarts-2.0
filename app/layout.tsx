@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "../components/ui/navbar";
 import "./globals.css";
-import Providers from './providers';
+import Providers from "./providers";
+import Starfield from "@/components/ui/starfield";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
+          <Starfield />
           {children}
         </Providers>
       </body>
