@@ -42,7 +42,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 size: "lg",
                 className: "mb-4",
               }),
-              "bg-[#6f2f2a] text-yellow-400 "
+              "bg-[#6f2f2a] text-yellow-400 ",
             )}
             href="/challenges"
             onClick={onClose}
@@ -59,7 +59,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 size: "lg",
                 className: "mb-4",
               }),
-              "bg-[#6f2f2a] text-yellow-400 "
+              "bg-[#6f2f2a] text-yellow-400 ",
             )}
             href="/register"
             onClick={onClose}
@@ -126,6 +126,12 @@ const Navbar = () => {
             <Loader className="w-6 h-6 animate-spin" />
           ) : status === "unauthenticated" ? (
             <>
+              <Link href="/register">
+                <Button variant="hackwarts">
+                  <Users className="w-4 h-4" />
+                  Register Team
+                </Button>
+              </Link>
               <Button
                 variant="hackwarts"
                 className="bg-amber-600 text-amber-950"
@@ -133,12 +139,6 @@ const Navbar = () => {
               >
                 <LogIn className="w-4 h-4" /> Login
               </Button>
-              <Link href="/register">
-                <Button variant="hackwarts">
-                  <Users className="w-4 h-4" />
-                  Register Team
-                </Button>
-              </Link>
             </>
           ) : (
             <>
