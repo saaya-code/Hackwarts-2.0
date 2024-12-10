@@ -42,7 +42,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 size: "lg",
                 className: "mb-4",
               }),
-              "bg-[#6f2f2a] text-yellow-400 ",
+              "bg-[#6f2f2a] text-yellow-400 "
             )}
             href="/challenges"
             onClick={onClose}
@@ -50,21 +50,23 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             <Swords className="w-6 h-6" /> Challenges
           </Link>
         )}
-        <Link
-          className={cn(
-            "w-full",
-            buttonVariants({
-              variant: "hackwarts",
-              size: "lg",
-              className: "mb-4",
-            }),
-            "bg-[#6f2f2a] text-yellow-400 ",
-          )}
-          href="/register"
-          onClick={onClose}
-        >
-          <Users className="w-6 h-6" /> Register Team
-        </Link>
+        {!session && (
+          <Link
+            className={cn(
+              "w-full",
+              buttonVariants({
+                variant: "hackwarts",
+                size: "lg",
+                className: "mb-4",
+              }),
+              "bg-[#6f2f2a] text-yellow-400 "
+            )}
+            href="/register"
+            onClick={onClose}
+          >
+            <Users className="w-6 h-6" /> Register Team
+          </Link>
+        )}
         <Button
           variant="hackwarts"
           className="bg-amber-600 text-amber-950 w-full mb-4"
@@ -86,7 +88,7 @@ const Navbar = () => {
   const { data: session } = useSession();
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="fixed z-40 top-0 left-4 right-4 box-border mt-4">
+    <div className="sticky z-40 top-0 left-4 right-4 box-border p-6 mt-4">
       <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-1 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
         {/* Baroque border design */}
         <Image
@@ -129,12 +131,14 @@ const Navbar = () => {
               </Button>
             </Link>
           )}
-          <Link href="/register">
-            <Button variant="hackwarts">
-              <Users className="w'4 h-4" />
-              Register Team
-            </Button>
-          </Link>
+          {!session && (
+            <Link href="/register">
+              <Button variant="hackwarts">
+                <Users className="w'4 h-4" />
+                Register Team
+              </Button>
+            </Link>
+          )}
           <Button
             variant="hackwarts"
             className="bg-amber-600 text-amber-950"
