@@ -1,18 +1,28 @@
 "use client";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import baroqueBorder from "@/public/baroqueborder.png";
 import magicien from "@/public/fly.png";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterPage() {
+  const { data: session } = useSession();
+
   const handleGoogleSignIn = () => {
     signIn("google", { callbackUrl: "/create-team" });
   };
 
+  useEffect(() => {
+    // TODO: Redirect to create-team page if user is already signed in and did not create a team yet.
+    if (session) {
+      window.location.href = "/create-team";
+    }
+  }, [session]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-rosewood to-blackbean overflow-hidden">
+    <div className="h-screen w-screen flex items-start justify-center py-10">
       <div className="max-w-2xl w-full mx-4 relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm">
         <Image
           src={baroqueBorder}
