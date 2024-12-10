@@ -109,7 +109,7 @@ export default function CreateTeam() {
   };
 
   return (
-    <div className="min-h-screen pt-24 px-4 bg-gradient-to-b from-rosewood to-blackbean">
+    <div className="min-h-screen pt-5 px-4">
       <div className="max-w-2xl mx-auto bg-[#c7b256] p-8 rounded-xl border-2 border-yellow-600 shadow-[0_0_50px_rgba(255,215,0,0.3)] relative">
         <Image
           src={baroqueBorder}
