@@ -6,6 +6,7 @@ import Image from "next/image";
 import baroqueBorder from "@/public/baroqueborder.png";
 import goldenball from "@/public/goldenball.png";
 import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 
 interface Challenge {
   _id: string;
@@ -19,14 +20,43 @@ interface Challenge {
 
 export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const { data: session } = useSession();
+  const [isSelected, setIsSelected] = useState(false);
+  const [maxChallengesReached, setMaxChallengesReached] = useState(false);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      checkChallengeStatus();
+    }
+  }, [session]);
+
+  const checkChallengeStatus = async () => {
+    try {
+      const res = await fetch(
+        `/api/teams/challenges-status?email=${session?.user?.email}`,
+      );
+      const data = await res.json();
+
+      setIsSelected(data.selectedChallenges.includes(challenge._id));
+      setMaxChallengesReached(data.selectedChallenges.length >= 2);
+    } catch (error) {
+      console.error("Error checking challenge status:", error);
+    }
+  };
 
   const handleSelectChallenge = async () => {
+    if (!session?.user?.email) return;
+
+    const confirmed = window.confirm(
+      "Are you sure you want to select this challenge? This action cannot be undone.",
+    );
+    if (!confirmed) return;
+
     try {
       const res = await fetch("/api/challenges/select", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          teamEmail: session?.user?.email,
+          teamEmail: session.user.email,
           challengeId: challenge._id,
         }),
       });
@@ -35,10 +65,23 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
       if (!res.ok) throw new Error(data.error);
 
       alert("Challenge selected successfully");
+      checkChallengeStatus();
     } catch (error: any) {
       alert(error.message);
     }
   };
+
+  const getButtonState = () => {
+    if (!session?.user?.email) return null;
+    if (isSelected) return { disabled: true, text: "Already Selected" };
+    if (maxChallengesReached)
+      return { disabled: true, text: "Max selected challenges" };
+    return { disabled: false, text: "Select Challenge" };
+  };
+
+  const buttonState = getButtonState();
+
+  if (!buttonState) return null;
 
   return (
     <div className="relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm">
@@ -81,9 +124,13 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
         </p>
       </div>
 
-      <Button variant="hackwarts" onClick={handleSelectChallenge}>
+      <Button
+        variant="hackwarts"
+        onClick={handleSelectChallenge}
+        disabled={buttonState.disabled}
+      >
         <Swords className="w-4 h-4 mr-2" />
-        Select Challenge
+        {buttonState.text}
       </Button>
     </div>
   );
