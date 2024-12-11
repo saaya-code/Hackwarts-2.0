@@ -3,6 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useTeamCheck } from "@/hooks/useTeamCheck";
 
 import { Loader, LogIn, Menu, Swords, Users, X } from "lucide-react";
 
@@ -15,6 +16,8 @@ import { cn } from "@/lib/utils";
 
 function MobileMenu({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
+  const { hasTeam } = useTeamCheck(session?.user?.email);
+
   return (
     <div className="fixed inset-0 z-40 backdrop-blur bg-black bg-opacity-35 pointer-events-none flex flex-col items-center justify-center p-4 overflow-y-auto">
       <div className="z-50 w-full max-w-sm bg-[#F3E5AB] bg-blend-multiply bg-cover bg-center rounded-lg p-8 transform rotate-1 shadow-xl border-4 border-[#8E6F3E] relative pointer-events-auto">
@@ -33,23 +36,40 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <h2 className="text-6xl font-bold text-[#4A0E0E] text-center mb-6 font-serif text-harryp">
           Menu
         </h2>
-        {session && (
-          <Link
-            className={cn(
-              "w-full",
-              buttonVariants({
-                variant: "hackwarts",
-                size: "lg",
-                className: "mb-4",
-              }),
-              "bg-[#6f2f2a] text-yellow-400 ",
-            )}
-            href="/challenges"
-            onClick={onClose}
-          >
-            <Swords className="w-6 h-6" /> Challenges
-          </Link>
-        )}
+        {session &&
+          (hasTeam ? (
+            <Link
+              className={cn(
+                "w-full",
+                buttonVariants({
+                  variant: "hackwarts",
+                  size: "lg",
+                  className: "mb-4",
+                }),
+                "bg-[#6f2f2a] text-yellow-400 ",
+              )}
+              href="/challenges"
+              onClick={onClose}
+            >
+              <Swords className="w-6 h-6" /> Challenges
+            </Link>
+          ) : (
+            <Link
+              className={cn(
+                "w-full",
+                buttonVariants({
+                  variant: "hackwarts",
+                  size: "lg",
+                  className: "mb-4",
+                }),
+                "bg-[#6f2f2a] text-yellow-400 ",
+              )}
+              href="/create-team"
+              onClick={onClose}
+            >
+              <Users className="w-6 h-6" /> Create Team
+            </Link>
+          ))}
         {!session && (
           <Link
             className={cn(
@@ -85,8 +105,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
 }
 
 const Navbar = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+  const { hasTeam } = useTeamCheck(session?.user?.email);
   const [toggle, setToggle] = useState(false);
+
   return (
     <div className="relative z-40 py-3 px-1">
       <nav className="backdrop-blur-md flex items-center justify-between relative w-full h-full py-1 px-6 box-border border-t-2 border-b-2 border-yellow-500 ">
@@ -142,12 +164,22 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link href="/challenges">
-                <Button variant="hackwarts">
-                  <Swords className="w'4 h-4" />
-                  Challenges
-                </Button>
-              </Link>
+              {status === "authenticated" &&
+                (hasTeam ? (
+                  <Link href="/challenges">
+                    <Button variant="hackwarts">
+                      <Swords className="w-4 h-4" />
+                      Challenges
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href="/create-team">
+                    <Button variant="hackwarts">
+                      <Users className="w-4 h-4" />
+                      Create Team
+                    </Button>
+                  </Link>
+                ))}
               <Button
                 variant="hackwarts"
                 className="bg-amber-600 text-amber-950"
