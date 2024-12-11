@@ -1,12 +1,20 @@
+"use server";
 import { Challenge } from "@/app/models/Challenge";
 import { connectToDatabase } from "@/lib/mongodb";
-import baroqueBorder from "@/public/baroqueborder.png";
-import goldenball from "@/public/goldenball.png";
-import Image from "next/image";
+import ChallengeCard from "@/components/ui/ChallengeCard";
 
 async function getChallenges() {
   await connectToDatabase();
-  return Challenge.find({});
+  const challenges = await Challenge.find({});
+  return challenges.map((challenge) => ({
+    _id: challenge.id,
+    name: challenge.name,
+    sponsor_name: challenge.sponsor_name,
+    description: challenge.description,
+    prize: challenge.prize,
+    createdAt: challenge.createdAt?.toISOString(),
+    updatedAt: challenge.updatedAt?.toISOString(),
+  }));
 }
 
 export default async function ChallengesPage() {
@@ -21,49 +29,7 @@ export default async function ChallengesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {challenges.map((challenge) => (
-            <div
-              key={challenge._id as string}
-              className="relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm"
-            >
-              <Image
-                src={baroqueBorder}
-                alt="Baroque border"
-                className="absolute -top-4 -left-2 h-12 w-auto"
-              />
-              <Image
-                src={baroqueBorder}
-                alt="Baroque border"
-                className="absolute h-12 w-auto -bottom-4 -left-2 -scale-y-100"
-              />
-              <Image
-                src={baroqueBorder}
-                alt="Baroque border"
-                className="absolute h-12 w-auto -top-4 -right-2 -scale-x-100"
-              />
-              <Image
-                src={baroqueBorder}
-                alt="Baroque border"
-                className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
-              />
-
-              <div className="relative">
-                <Image
-                  src={goldenball}
-                  alt="Golden ball"
-                  className="w-12 absolute -top-6 -right-4 animate-sinusoidal"
-                />
-                <h2 className="text-3xl text-harryp font-bold text-licorice mb-3">
-                  {challenge.name}
-                </h2>
-                <p className="text-sm font-semibold text-licorice mb-2">
-                  Sponsored by {challenge.sponsor_name}
-                </p>
-                <p className="text-licorice mb-4">{challenge.description}</p>
-                <p className="text-sm font-bold text-licorice">
-                  Prize: {challenge.prize}
-                </p>
-              </div>
-            </div>
+            <ChallengeCard key={challenge._id} challenge={challenge} />
           ))}
         </div>
       </div>
