@@ -6,20 +6,27 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { useTeamCheck } from "@/hooks/useTeamCheck";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const { data: session } = useSession();
+  const { hasTeam } = useTeamCheck(session?.user?.email);
+  const router = useRouter();
 
   const handleGoogleSignIn = () => {
     signIn("google", { callbackUrl: "/create-team" });
   };
 
   useEffect(() => {
-    // TODO: Redirect to create-team page if user is already signed in and did not create a team yet.
     if (session) {
-      window.location.href = "/create-team";
+      if (hasTeam) {
+        router.push("/challenges");
+      } else {
+        router.push("/create-team");
+      }
     }
-  }, [session]);
+  }, [session, hasTeam]);
 
   return (
     <div className="h-screen w-screen flex items-start justify-center py-10">

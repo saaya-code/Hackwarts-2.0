@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 import { createTeam } from "@/app/actions/create-team";
+import { useTeamCheck } from "@/hooks/useTeamCheck";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -31,20 +32,21 @@ const formSchema = z.object({
       z.object({
         name: z.string().min(2),
         email: z.string().email(),
-      })
+      }),
     )
     .max(4), // Max 4 additional members + 1 leader = 5 total
 });
 
 export default function CreateTeam() {
   const { data: session, status } = useSession();
+  const { hasTeam } = useTeamCheck(session?.user?.email);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "", // Add this
-      house: undefined, // Add this explicitly 
+      house: undefined, // Add this explicitly
       leader_name: session?.user?.name || "",
       leader_email: session?.user?.email || "",
       members: [],
@@ -61,30 +63,40 @@ export default function CreateTeam() {
 
   const getHouseEmoji = (house: string) => {
     switch (house) {
-      case "Gryffindor": return "🦁";
-      case "Hufflepuff": return "🦡";
-      case "Ravenclaw": return "🦅";
-      case "Slytherin": return "🐍";
-      default: return "🎩";
+      case "Gryffindor":
+        return "🦁";
+      case "Hufflepuff":
+        return "🦡";
+      case "Ravenclaw":
+        return "🦅";
+      case "Slytherin":
+        return "🐍";
+      default:
+        return "🎩";
     }
   };
 
   const sortingHat = () => {
     if (hasSorted) return;
-    
+
     setIsSorting(true);
     const houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"];
     let duration = 2000;
     let startTime = Date.now();
-    
+
     // Pre-select final house
-    const finalHouse = houses[Math.floor(Math.random() * houses.length)] as z.infer<typeof formSchema>["house"];
+    const finalHouse = houses[
+      Math.floor(Math.random() * houses.length)
+    ] as z.infer<typeof formSchema>["house"];
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
       if (elapsed < duration) {
         const randomIndex = Math.floor((Date.now() / 100) % houses.length);
-        form.setValue("house", houses[randomIndex] as z.infer<typeof formSchema>["house"]);
+        form.setValue(
+          "house",
+          houses[randomIndex] as z.infer<typeof formSchema>["house"],
+        );
         requestAnimationFrame(animate);
       } else {
         form.setValue("house", finalHouse);
@@ -99,6 +111,8 @@ export default function CreateTeam() {
   useEffect(() => {
     if (!session && status !== "loading") {
       router.push("/register");
+    } else if (session && status === "authenticated") {
+      if (hasTeam) router.push("/challenges");
     }
     if (session?.user) {
       form.reset({
@@ -107,7 +121,7 @@ export default function CreateTeam() {
         leader_email: session.user.email || "",
       });
     }
-  }, [session, status]);
+  }, [session, status, hasTeam]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
@@ -142,20 +156,20 @@ export default function CreateTeam() {
         </h1>
 
         <Form {...form}>
-          <form 
+          <form
             onSubmit={form.handleSubmit(async (data) => {
-              const formData = new FormData()
+              const formData = new FormData();
               // Append all form fields
-              formData.append('name', data.name)
-              formData.append('house', data.house)
-              formData.append('leader_name', data.leader_name)
-              formData.append('leader_email', data.leader_email)
+              formData.append("name", data.name);
+              formData.append("house", data.house);
+              formData.append("leader_name", data.leader_name);
+              formData.append("leader_email", data.leader_email);
               // Handle members array
               data.members.forEach((member, index) => {
-                formData.append(`members.${index}.name`, member.name)
-                formData.append(`members.${index}.email`, member.email)
-              })
-              await createTeam(formData)
+                formData.append(`members.${index}.name`, member.name);
+                formData.append(`members.${index}.email`, member.email);
+              });
+              await createTeam(formData);
             })}
             className="space-y-6"
           >
