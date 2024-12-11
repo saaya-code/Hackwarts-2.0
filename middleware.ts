@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const isAuth = !!req.auth;
+  req.headers.set("X-Forwarded-Host", process.env.AUTH_TRUST_HOST as string)
+  req.headers.set("X-Forwarded-Proto", process.env.AUTH_TRUST_HOST as string) 
   const protectedRoutes = [
     "/challenges",
     "/profile",
