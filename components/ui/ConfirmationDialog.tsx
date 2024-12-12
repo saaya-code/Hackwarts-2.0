@@ -58,7 +58,11 @@ export function ConfirmationDialog({
         </DialogHeader>
 
         <DialogFooter className="flex gap-2 justify-end">
-          <Button variant="secondary" onClick={onClose}>
+          <Button
+            variant="outline"
+            className="bg-[#c7b256] border-[#6f2f2a] text-[#6f2f2a] hover:bg-[#6f2f2a] hover:text-yellow-400 transition-colors"
+            onClick={onClose}
+          >
             Cancel
           </Button>
           <Button variant="hackwarts" onClick={onConfirm}>
