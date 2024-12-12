@@ -168,7 +168,7 @@ function HousePercentage() {
       </h1>
       <div className="text-center text-2xl mb-4">
         <span className="font-bold">Total Members: </span>
-        <NumberTicker className="text-inherit" value={100} duration={2000} />
+        <NumberTicker className="text-inherit" value={100} />
       </div>
       <div className="flex items-center justify-center">
         <HouseBanner house="Gryffindor" value={20} />
