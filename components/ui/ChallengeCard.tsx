@@ -8,6 +8,7 @@ import goldenball from "@/public/goldenball.png";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { ConfirmationDialog } from "./ConfirmationDialog";
+import { SuccessDialog } from "./SuccessDialog";
 
 interface Challenge {
   _id: string;
@@ -24,6 +25,8 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const [isSelected, setIsSelected] = useState(false);
   const [maxChallengesReached, setMaxChallengesReached] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -64,10 +67,12 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      alert("Challenge selected successfully");
+      setDialogMessage(`You've successfully selected "${challenge.name}"`);
+      setShowSuccessDialog(true);
       checkChallengeStatus();
     } catch (error: any) {
-      alert(error.message);
+      setDialogMessage(error.message);
+      setShowSuccessDialog(true);
     } finally {
       setShowConfirmDialog(false);
     }
@@ -143,6 +148,12 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
         onConfirm={handleConfirmSelection}
         title="Select Challenge"
         description={`Are you sure you want to select "${challenge.name}"? This action cannot be undone.`}
+      />
+      <SuccessDialog
+        isOpen={showSuccessDialog}
+        onClose={() => setShowSuccessDialog(false)}
+        title="Magic Spell Result"
+        message={dialogMessage}
       />
     </>
   );
