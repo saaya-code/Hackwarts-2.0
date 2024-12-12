@@ -87,7 +87,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
 
   return (
     <>
-      <div className="relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm">
+      <div className="relative border-2 border-yellow-600 p-8 rounded-xl bg-[#c7b256] shadow-[0_0_50px_rgba(255,215,0,0.3)] backdrop-blur-sm flex flex-col">
         <Image
           src={baroqueBorder}
           alt="Baroque border"
@@ -109,7 +109,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
         />
 
-        <div className="relative">
+        <div className="relative flex-1">
           <Image
             src={goldenball}
             alt="Golden ball"
@@ -131,6 +131,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           variant="hackwarts"
           onClick={handleSelectChallenge}
           disabled={buttonState.disabled}
+          className="mt-4"
         >
           <Swords className="w-4 h-4 mr-2" />
           {buttonState.text}
