@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Swords } from "lucide-react";
+import { Swords, Scroll } from "lucide-react";
 import Image from "next/image";
 import baroqueBorder from "@/public/baroqueborder.png";
 import goldenball from "@/public/goldenball.png";
@@ -189,6 +189,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
               onClick={buttonState.secondary.onClick}
               disabled={buttonState.secondary.disabled}
             >
+              <Scroll className="w-4 h-4 mr-2" />
               {buttonState.secondary.text}
             </Button>
           )}
