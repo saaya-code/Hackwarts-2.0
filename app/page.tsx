@@ -11,6 +11,8 @@ import issat from "@/public/issat.png";
 import logo from "@/public/logo.png";
 import moon from "@/public/moon.png";
 import Starfield from "@/components/ui/starfield";
+import HouseBanner from "@/components/ui/house-banner";
+import NumberTicker from "@/components/ui/number-ticker";
 
 function Hero() {
   return (
@@ -158,6 +160,26 @@ function Prize() {
   );
 }
 
+function HousePercentage() {
+  return (
+    <div>
+      <h1 className="text-4xl text-harryp text-center mb-4">
+        How many members in each house?
+      </h1>
+      <div className="text-center text-2xl mb-4">
+        <span className="font-bold">Total Members: </span>
+        <NumberTicker className="text-inherit" value={100} />
+      </div>
+      <div className="flex items-center justify-center">
+        <HouseBanner house="Gryffindor" value={20} />
+        <HouseBanner house="Hufflepuff" value={20} />
+        <HouseBanner house="Slytherin" value={30} />
+        <HouseBanner house="Ravenclaw" value={30} />
+      </div>
+    </div>
+  );
+}
+
 function Footer() {
   return (
     <footer className="flex flex-col items-center justify-center py-6 mt-12 bg-rosewood text-white">
@@ -180,6 +202,7 @@ export default function Home() {
   return (
     <div>
       <Hero />
+      <HousePercentage />
       <Location />
       <Prize />
       <h1 className="text-6xl text-harryp text-center mt-12">And more...</h1>

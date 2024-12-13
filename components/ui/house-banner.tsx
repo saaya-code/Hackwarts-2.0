@@ -4,13 +4,16 @@ import hufflepuff from "@/public/hufflepuf.png";
 import ravenclaw from "@/public/ravenclaw.png";
 import slytherin from "@/public/slytherines.png";
 import Image from "next/image";
+import NumberTicker from "./number-ticker";
 
 interface HouseBannerProps {
   house: "Gryffindor" | "Hufflepuff" | "Ravenclaw" | "Slytherin";
+  value?: number;
 }
 
 export default function HouseBanner({
   house = "Gryffindor",
+  value,
 }: HouseBannerProps) {
   return (
     <div className="relative w-32">
@@ -33,8 +36,8 @@ export default function HouseBanner({
           />
 
           {/* Content container */}
-          <div className="flex flex-col items-center gap-4 pt-4 pb-2">
-            <div className="relative">
+          <div className="flex flex-col items-center gap-4 pt-4 pb-2 group transition-all duration-300 hover:scale-105 cursor-pointer">
+            <div className="relative transition-all duration-300 hover:filter group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]">
               {house === "Gryffindor" && (
                 <Image src={gryfindor} alt="Gryffindor" className="w-16 h-16" />
               )}
@@ -53,10 +56,14 @@ export default function HouseBanner({
               )}
             </div>
             <div className="text-center">
-              house
               <h3 className="font-serif text-lg font-bold text-white">
                 {house}
               </h3>
+              {value && (
+                <div className="text-white text-lg p-1 rounded-full mt-2">
+                  <NumberTicker value={value} className="text-xl text-white" />%
+                </div>
+              )}
             </div>
           </div>
         </div>

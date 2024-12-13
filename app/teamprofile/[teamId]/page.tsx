@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import baroqueBorder from "@/public/baroqueborder.png";
 import Image from "next/image";
 import HouseBanner from "@/components/ui/house-banner";
-import { AtSign, Edit, User, X } from "lucide-react";
+import { AtSign, Edit, Octagon, Plus, User, X } from "lucide-react";
 import Link from "next/link";
 import Modal from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Member = ({
   member,
@@ -41,11 +42,18 @@ const page = () => {
   const members = [
     { name: "Member 1", email: "member1@gmail.com" },
     { name: "Member 2", email: "member2@gmail.com" },
+    { name: "Member 3", email: "member2@gmail.com" },
+    { name: "Member 4", email: "member2@gmail.com" },
+    { name: "Member 5", email: "member2@gmail.com" },
   ];
   const selectedChallenges = [
     { title: "Challenge 1" },
     { title: "Challenge 2" },
   ];
+
+  // TODO: check if total number of team members is less or equal to 5
+  // then display the add member button
+
   return (
     <div className="flex items-center justify-center">
       <Modal
@@ -56,6 +64,20 @@ const page = () => {
         }}
       >
         <div className="flex flex-col gap-2 mt-4">
+          {members.length < 5 ? (
+            <div className="grid grid-cols-[3fr_3fr_1fr] gap-1">
+              <Input className="" placeholder="Name" />
+              <Input placeholder="Email" />
+              <Button variant="hackwarts">
+                <Plus className="w-4 h-4" />
+              </Button>
+            </div>
+          ) : (
+            <div className="text-rosewood flex justify-center items-center gap-2">
+              <Octagon className="w-4 h-4" />
+              Max team members reached
+            </div>
+          )}
           {members.map((member, index) => (
             <Member key={`member-${index}`} member={member} />
           ))}
