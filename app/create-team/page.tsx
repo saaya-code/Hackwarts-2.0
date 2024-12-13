@@ -45,8 +45,8 @@ export default function CreateTeam() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "", // Add this
-      house: undefined, // Add this explicitly
+      name: "",
+      house: undefined,
       leader_name: session?.user?.name || "",
       leader_email: session?.user?.email || "",
       members: [],
@@ -109,10 +109,10 @@ export default function CreateTeam() {
   };
 
   useEffect(() => {
-    if (!session && status !== "loading") {
+    if (status === "unauthenticated" || !session) {
       router.push("/register");
-    } else if (session && status === "authenticated") {
-      if (hasTeam) router.push("/challenges");
+    } else if (status === "authenticated" && hasTeam) {
+      router.push("/challenges");
     }
     if (session?.user) {
       form.reset({
@@ -121,7 +121,7 @@ export default function CreateTeam() {
         leader_email: session.user.email || "",
       });
     }
-  }, [session, status, hasTeam]);
+  }, [session, status, router, hasTeam]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
