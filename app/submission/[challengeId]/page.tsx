@@ -7,8 +7,26 @@ import baroqueBorder from "@/public/baroqueborder.png";
 import { Button } from "@/components/ui/button";
 import { ArrowBigLeft, CheckCircle, Users } from "lucide-react";
 import NumberTicker from "@/components/ui/number-ticker";
+import { Challenge } from "@/app/models/Challenge";
+import { Submission } from "@/app/models/Submission";
+import { connectToDatabase } from "@/lib/mongodb";
 
-const page = () => {
+async function getChallengeDetails(challengeId: string) {
+  await connectToDatabase();
+  const challenge = await Challenge.findById(challengeId);
+  if (!challenge) throw new Error("Challenge not found");
+  return challenge;
+}
+
+async function getSubmissionCount(challengeId: string) {
+  await connectToDatabase();
+  return await Submission.countDocuments({ challenge_id: challengeId });
+}
+
+const page = async ({ params }: { params: { challengeId: string } }) => {
+  const challenge = await getChallengeDetails(params.challengeId);
+  const submissionCount = await getSubmissionCount(params.challengeId);
+
   return (
     <div className="flex items-center justify-center">
       <div className="w-full max-w-[600px] m-6">
@@ -37,13 +55,9 @@ const page = () => {
             className="absolute h-12 w-auto -bottom-4 -right-2 -scale-y-100 -scale-x-100"
           />
           <div>
-            <h1 className="text-4xl font-bold text-harryp">
-              The Challenge Name
-            </h1>
-            <p className="text-lg ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              egestas magna sit amet mauris.
-            </p>
+            <h1 className="text-4xl font-bold text-harryp">{challenge.name}</h1>
+            <p className="text-lg">{challenge.description}</p>
+            <p className="text-lg font-bold mt-2">Prize: {challenge.prize}</p>
           </div>
           <div className="flex items-center justify-center">
             <img
@@ -54,14 +68,15 @@ const page = () => {
           </div>
         </div>
         <div className="mt-4 text-2xl text-center mb-6 text-harryp flex items-center justify-center gap-1">
-          <Users /> <NumberTicker className="text-copper" value={50} /> Teams
+          <Users />{" "}
+          <NumberTicker className="text-copper" value={submissionCount} /> Teams
           Submitted
         </div>
         <h1 className="text-4xl font-bold text-harryp">Project Submission</h1>
         <div className="mb-4">
           <Label className="text-sunset">Github Repository</Label>
           <Input
-            placeholder="e.g https://www.github.com/myproject"
+            placeholder="e.g https://www.github.com/username/myproject"
             className="bg-white"
           />
         </div>
