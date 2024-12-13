@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 async function checkTeam(email: string) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/check-team?email=${email}`,
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/check-team?email=${email}`
   );
   const data = await response.json();
   return data.hasTeam;
@@ -21,25 +21,25 @@ export default auth(async (req) => {
   ];
 
   const isProtectedRoute = protectedRoutes.some((route) =>
-    req.nextUrl.pathname.startsWith(route),
+    req.nextUrl.pathname.startsWith(route)
   );
   const userEmail = req.auth?.user?.email;
   if (isProtectedRoute) {
     if (!isAuth) {
-      return NextResponse.redirect(new URL("/register", req.nextUrl));
+      return NextResponse.redirect(new URL("/register", req.nextUrl.href));
     }
 
     if (req.nextUrl.pathname === "/create-team") {
       const hasTeam = await checkTeam(userEmail as string);
       if (hasTeam) {
-        return NextResponse.redirect(new URL("/challenges", req.nextUrl));
+        return NextResponse.redirect(new URL("/challenges", req.nextUrl.href));
       }
     }
 
     if (req.nextUrl.pathname !== "/create-team") {
       const hasTeam = await checkTeam(userEmail as string);
       if (!hasTeam) {
-        return NextResponse.redirect(new URL("/create-team", req.nextUrl));
+        return NextResponse.redirect(new URL("/create-team", req.nextUrl.href));
       }
     }
   }
@@ -48,9 +48,9 @@ export default auth(async (req) => {
     if (userEmail) {
       const hasTeam = await checkTeam(userEmail);
       if (hasTeam) {
-        return NextResponse.redirect(new URL("/challenges", req.nextUrl));
+        return NextResponse.redirect(new URL("/challenges", req.nextUrl.href));
       }
-      return NextResponse.redirect(new URL("/create-team", req.nextUrl));
+      return NextResponse.redirect(new URL("/create-team", req.nextUrl.href));
     }
   }
 

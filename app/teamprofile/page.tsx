@@ -26,9 +26,12 @@ const Member = ({
   async function deleteMember() {
     try {
       setIsDeleting(true);
-      const response = await fetch(`/api/manage-members/${member.email}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `/api/manage-members?email=${member.email}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setMembers(data.members);
