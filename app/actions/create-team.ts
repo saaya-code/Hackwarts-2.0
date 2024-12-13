@@ -14,7 +14,7 @@ const formSchema = z.object({
       z.object({
         name: z.string().min(2),
         email: z.string().email(),
-      }),
+      })
     )
     .max(4), // Max 4 additional members + 1 leader = 5 total
 });
@@ -48,6 +48,31 @@ export const createTeam = async (formData: FormData) => {
   const leaderExists = await Team.exists({
     leader_email: teamData.leader_email,
   });
+  // check if email exists in all members of all the teams in the database
+  const memberExists = await Team.exists({
+    $or: [
+      { "members.email": teamData.leader_email },
+      { leader_email: teamData.leader_email },
+    ],
+  });
+
+  // do not allow anyone to be a member of more than one team
+  const memberEmails = teamData.members.map((member) => member.email);
+  const memberExistsInOtherTeam = await Team.exists({
+    $or: [
+      { "members.email": { $in: memberEmails } },
+      { leader_email: { $in: memberEmails } },
+    ],
+  });
+
+  if (memberExistsInOtherTeam) {
+    throw new Error("Email already registered in another team");
+  }
+
+  if (memberExists) {
+    throw new Error("Email already registered in another team");
+  }
+
   if (leaderExists) {
     throw new Error("Team leader already exists");
   }
@@ -63,4 +88,3 @@ export const createTeam = async (formData: FormData) => {
   }
   redirect("/challenges");
 };
-

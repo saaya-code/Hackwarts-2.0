@@ -78,11 +78,11 @@ const page = () => {
   const [team, setTeam] = useState<{
     name: string;
     leader_name: string;
-    house: string;
+    house: "Hufflepuff" | "Gryffindor" | "Ravenclaw" | "Slytherin";
   }>({
     name: "",
     leader_name: "",
-    house: "",
+    house: "Hufflepuff",
   });
 
   const [teamForm, setTeamForm] = useState<{
@@ -274,7 +274,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <HouseBanner house="Ravenclaw" />
+        <HouseBanner house={team.house} />
       </div>
     </div>
   );

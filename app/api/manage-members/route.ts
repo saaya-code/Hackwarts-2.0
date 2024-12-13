@@ -64,6 +64,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // find if the user is in any other team
+  const memberExists = await Team.exists({
+    $or: [{ "members.email": email }, { leader_email: email }],
+  });
+
+  if (memberExists) {
+    return NextResponse.json(
+      { message: "Member already exists in another team" },
+      {
+        status: 400, // Bad Request
+      }
+    );
+  }
+
   team.members.push({ name, email });
   await team.save();
 
