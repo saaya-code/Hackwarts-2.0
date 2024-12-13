@@ -46,7 +46,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                   size: "lg",
                   className: "mb-4",
                 }),
-                "bg-[#6f2f2a] text-yellow-400 ",
+                "bg-[#6f2f2a] text-yellow-400 "
               )}
               href="/challenges"
               onClick={onClose}
@@ -62,7 +62,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                   size: "lg",
                   className: "mb-4",
                 }),
-                "bg-[#6f2f2a] text-yellow-400 ",
+                "bg-[#6f2f2a] text-yellow-400 "
               )}
               href="/create-team"
               onClick={onClose}
@@ -79,7 +79,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
                 size: "lg",
                 className: "mb-4",
               }),
-              "bg-[#6f2f2a] text-yellow-400 ",
+              "bg-[#6f2f2a] text-yellow-400 "
             )}
             href="/register"
             onClick={onClose}
@@ -166,12 +166,20 @@ const Navbar = () => {
             <>
               {status === "authenticated" &&
                 (hasTeam ? (
-                  <Link href="/challenges">
-                    <Button variant="hackwarts">
-                      <Swords className="w-4 h-4" />
-                      Challenges
-                    </Button>
-                  </Link>
+                  <>
+                    <Link href="/challenges">
+                      <Button variant="hackwarts">
+                        <Swords className="w-4 h-4" />
+                        Challenges
+                      </Button>
+                    </Link>
+                    <Link href={`/teamprofile`}>
+                      <Button variant="hackwarts">
+                        <Users className="w-4 h-4" />
+                        Team Profile
+                      </Button>
+                    </Link>
+                  </>
                 ) : (
                   <Link href="/create-team">
                     <Button variant="hackwarts">
