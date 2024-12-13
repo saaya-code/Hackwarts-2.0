@@ -8,6 +8,7 @@ import Link from "next/link";
 import Modal from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "react-toastify";
 
 const Member = ({
   member,
@@ -141,9 +142,12 @@ const page = () => {
         // reset the form
         setTeamForm({ name: "", email: "" });
         setMembers(data.members);
+        toast("Added member to the team", { type: "success" });
+      } else {
+        toast(data.message, { type: "error" });
       }
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      toast(error.response.message, { type: "error" });
     } finally {
       setCreateLoading(false);
     }
