@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { SuccessDialog } from "./SuccessDialog";
+import { useRouter } from "next/navigation";
 
 interface Challenge {
   _id: string;
@@ -20,6 +21,19 @@ interface Challenge {
   updatedAt?: string;
 }
 
+interface ButtonState {
+  primary: {
+    disabled: boolean;
+    text: string;
+    onClick?: () => void;
+  };
+  secondary: {
+    disabled: boolean;
+    text: string;
+    onClick: () => void;
+  } | null;
+}
+
 export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const { data: session } = useSession();
   const [isSelected, setIsSelected] = useState(false);
@@ -27,6 +41,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -78,12 +93,39 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
     }
   };
 
-  const getButtonState = () => {
+  const handleSubmitChallenge = () => {
+    router.push(`/submission/${challenge._id}`);
+  };
+
+  const getButtonState = (): ButtonState | null => {
     if (!session?.user?.email) return null;
-    if (isSelected) return { disabled: true, text: "Already Selected" };
+    if (isSelected) {
+      return {
+        primary: { disabled: true, text: "Already Selected" },
+        secondary: {
+          disabled: false,
+          text: "Submit Challenge",
+          onClick: handleSubmitChallenge,
+        },
+      };
+    }
     if (maxChallengesReached)
-      return { disabled: true, text: "Max selected challenges" };
-    return { disabled: false, text: "Select Challenge" };
+      return {
+        primary: {
+          disabled: true,
+          text: "Max selected challenges",
+          onClick: handleSelectChallenge,
+        },
+        secondary: null,
+      };
+    return {
+      primary: {
+        disabled: false,
+        text: "Select Challenge",
+        onClick: handleSelectChallenge,
+      },
+      secondary: null,
+    };
   };
 
   const buttonState = getButtonState();
@@ -132,15 +174,25 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           </p>
         </div>
 
-        <Button
-          variant="hackwarts"
-          onClick={handleSelectChallenge}
-          disabled={buttonState.disabled}
-          className="mt-4"
-        >
-          <Swords className="w-4 h-4 mr-2" />
-          {buttonState.text}
-        </Button>
+        <div className="flex flex-col gap-2 mt-4">
+          <Button
+            variant="hackwarts"
+            onClick={buttonState.primary.onClick}
+            disabled={buttonState.primary.disabled}
+          >
+            <Swords className="w-4 h-4 mr-2" />
+            {buttonState.primary.text}
+          </Button>
+          {buttonState.secondary && (
+            <Button
+              variant="hackwarts"
+              onClick={buttonState.secondary.onClick}
+              disabled={buttonState.secondary.disabled}
+            >
+              {buttonState.secondary.text}
+            </Button>
+          )}
+        </div>
       </div>
       <ConfirmationDialog
         isOpen={showConfirmDialog}
