@@ -2,7 +2,6 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { Team } from "../models/Team";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const formSchema = z.object({
