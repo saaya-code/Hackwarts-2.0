@@ -57,7 +57,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
       const data = await res.json();
 
       setIsSelected(data.selectedChallenges.includes(challenge._id));
-      setMaxChallengesReached(data.selectedChallenges.length >= 2);
+      setMaxChallengesReached(data.selectedChallenges.length >= 1);
     } catch (error) {
       console.error("Error checking challenge status:", error);
     }
