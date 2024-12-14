@@ -44,12 +44,24 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
   const router = useRouter();
+  const [numberOfTeams, setNumberOfTeams] = useState(0);
 
   useEffect(() => {
     if (session?.user?.email) {
       checkChallengeStatus();
+      checkHowManyTeamsSelectedTheChallenge();
     }
   }, [session]);
+
+const checkHowManyTeamsSelectedTheChallenge = async () =>{
+  try{
+    const res = await fetch(`/api/challenge-data?challengeId=${challenge._id}`)
+    const data = await res.json();
+    setNumberOfTeams(data.numberOfTeams);
+  }catch(err){
+    console.error(err);
+  }
+}
 
   const checkChallengeStatus = async () => {
     try {
@@ -179,6 +191,9 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           </Link>
           <p className="text-sm font-bold text-licorice">
             Prize: {challenge.prize}
+          </p>
+          <p className="text-lg font-bold text-rosewood underline">
+            Selected by {numberOfTeams} teams.
           </p>
         </div>
 
