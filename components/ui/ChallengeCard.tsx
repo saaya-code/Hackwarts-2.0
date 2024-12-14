@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { SuccessDialog } from "./SuccessDialog";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Challenge {
   _id: string;
@@ -17,6 +18,7 @@ interface Challenge {
   sponsor_name: string;
   description: string;
   prize: string;
+  link: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -52,12 +54,12 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const checkChallengeStatus = async () => {
     try {
       const res = await fetch(
-        `/api/teams/challenges-status?email=${session?.user?.email}`
+        `/api/teams/challenges-status?email=${session?.user?.email}`,
       );
       const data = await res.json();
 
       setIsSelected(data.selectedChallenges.includes(challenge._id));
-      setMaxChallengesReached(data.selectedChallenges.length >= 2);
+      setMaxChallengesReached(data.selectedChallenges.length >= 1);
     } catch (error) {
       console.error("Error checking challenge status:", error);
     }
@@ -169,6 +171,12 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
             Sponsored by {challenge.sponsor_name}
           </p>
           <p className="text-licorice mb-4">{challenge.description}</p>
+          <Link
+            href={challenge.link}
+            className="text-licorice mb-3 hover:underline"
+          >
+            {challenge.link}
+          </Link>
           <p className="text-sm font-bold text-licorice">
             Prize: {challenge.prize}
           </p>

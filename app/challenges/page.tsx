@@ -5,6 +5,7 @@ import ChallengeCard from "@/components/ui/ChallengeCard";
 
 async function getChallenges() {
   await connectToDatabase();
+  await Challenge.syncIndexes();
   const challenges = await Challenge.find({});
   return challenges.map((challenge) => ({
     _id: challenge.id,
@@ -12,6 +13,7 @@ async function getChallenges() {
     sponsor_name: challenge.sponsor_name,
     description: challenge.description,
     prize: challenge.prize,
+    link: challenge.link,
     createdAt: challenge.createdAt?.toISOString(),
     updatedAt: challenge.updatedAt?.toISOString(),
   }));

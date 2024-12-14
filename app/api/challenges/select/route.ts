@@ -12,17 +12,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Team not found" }, { status: 404 });
     }
 
-    if (team.selected_challenges.length >= 2) {
+    if (team.selected_challenges.length >= 1) {
       return NextResponse.json(
         { error: "Maximum challenges already selected" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (team.selected_challenges.includes(challengeId)) {
       return NextResponse.json(
         { error: "Challenge already selected" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,3 +34,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+

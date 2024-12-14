@@ -31,7 +31,7 @@ const Member = ({
         `/api/manage-members?email=${member.email}`,
         {
           method: "DELETE",
-        }
+        },
       );
       const data = await response.json();
       if (response.ok) {
@@ -101,23 +101,15 @@ const page = () => {
     }[]
   >([]);
 
-  const [selectedChallenges, setSelectedChallenges] = useState<
-    {
-      title: string;
-    }[]
-  >([]);
-
   const [createLoading, setCreateLoading] = useState(false);
 
   async function getTeam() {
     try {
       const response = await fetch("/api/team");
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setTeam(data.team);
         setMembers(data.team.members);
-        setSelectedChallenges(data.team.selected_challenges);
       }
     } catch (error) {
       throw error;
@@ -262,18 +254,6 @@ const page = () => {
                 <div key={`member-list-${index}`} className="flex items-center">
                   <User className="w-4 h-4" /> {member.name}
                 </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="text-lg text-white font-bold">
-              Selected Challenges
-            </div>
-            <div className="flex flex-col">
-              {selectedChallenges.map((challenge, index) => (
-                <Link key={`challenge-${index}`} href="/challenges">
-                  {challenge.title}
-                </Link>
               ))}
             </div>
           </div>
