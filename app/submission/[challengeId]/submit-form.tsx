@@ -28,7 +28,6 @@ export function SubmitForm({challenge, submissionCount, teamId}: SubmitFormProps
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setLoading(true);
-
       try {
         const response = await fetch("/api/submit-challenge", {
           method: "POST",
