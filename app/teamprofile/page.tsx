@@ -118,6 +118,14 @@ const page = () => {
 
   async function addMember() {
     try {
+      if(teamForm.name === "") {
+        toast("Name of member is required", { type: "error" });
+        return;
+      }
+      if(teamForm.email === "") {
+        toast("Email of member is required", { type: "error" });
+        return;
+      }
       setCreateLoading(true);
       const response = await fetch(`/api/manage-members`, {
         method: "POST",
@@ -161,7 +169,7 @@ const page = () => {
         }}
       >
         <div className="flex flex-col gap-2 mt-4">
-          {members.length < 5 ? (
+          {members.length < 4 ? (
             <div className="grid grid-cols-[3fr_3fr_1fr] gap-1">
               <Input
                 className=""
