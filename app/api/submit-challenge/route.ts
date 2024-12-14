@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const { teamId , challengeId, submissionUrl, deploymentUrl } = await req.json();
     await connectToDatabase();
-    await Submission.syncIndexes();
     const submission = await Submission.findOneAndUpdate({challenge_id: challengeId, team_id: teamId},{
         team_id: teamId,
         challenge_id: challengeId,
