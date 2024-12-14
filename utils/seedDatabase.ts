@@ -10,6 +10,7 @@ const seedDataBase = async () => {
       sponsor_name: "TechCorp",
       description: "A 48-hour hackathon to solve coding challenges.",
       prize: "$10,000 and goodies",
+      link: "https://techcorp.com/coding-marathon",
     },
     {
       name: "AI Innovation Challenge",
@@ -17,12 +18,14 @@ const seedDataBase = async () => {
       description:
         "Create innovative AI-driven solutions for real-world problems.",
       prize: "Tech gadgets worth $5,000",
+      link: "https://aisolutions.com/ai-challenge",
     },
     {
       name: "Design Sprint",
       sponsor_name: "Creative Minds",
       description: "A design competition to create intuitive user interfaces.",
       prize: "$3,000 cash prize and design software licenses",
+      link: "https://creativeminds.com/design-sprint",
     },
   ]);
   console.log("Seeded Challenges:", challenges);

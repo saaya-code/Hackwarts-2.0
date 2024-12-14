@@ -12,6 +12,7 @@ async function getChallenges() {
     sponsor_name: challenge.sponsor_name,
     description: challenge.description,
     prize: challenge.prize,
+    link: challenge.link,
     createdAt: challenge.createdAt?.toISOString(),
     updatedAt: challenge.updatedAt?.toISOString(),
   }));
