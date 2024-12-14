@@ -41,6 +41,7 @@ export default function CreateTeam() {
   const { data: session, status } = useSession();
   const { hasTeam } = useTeamCheck(session?.user?.email);
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -123,10 +124,6 @@ export default function CreateTeam() {
     }
   }, [session, status, router, hasTeam]);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    // TODO: Implement team creation API call
-  };
 
   return (
     <div className="min-h-screen pt-5 px-4">
@@ -158,18 +155,25 @@ export default function CreateTeam() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(async (data) => {
-              const formData = new FormData();
-              // Append all form fields
-              formData.append("name", data.name);
-              formData.append("house", data.house);
-              formData.append("leader_name", data.leader_name);
-              formData.append("leader_email", data.leader_email);
-              // Handle members array
-              data.members.forEach((member, index) => {
-                formData.append(`members.${index}.name`, member.name);
-                formData.append(`members.${index}.email`, member.email);
-              });
-              await createTeam(formData);
+              try {
+                setIsSubmitting(true);
+                const formData = new FormData();
+                // Append all form fields
+                formData.append("name", data.name);
+                formData.append("house", data.house);
+                formData.append("leader_name", data.leader_name);
+                formData.append("leader_email", data.leader_email);
+                // Handle members array
+                data.members.forEach((member, index) => {
+                  formData.append(`members.${index}.name`, member.name);
+                  formData.append(`members.${index}.email`, member.email);
+                });
+                await createTeam(formData);
+                setIsSubmitting(false);
+
+              } catch (error) {
+               
+              } 
             })}
             className="space-y-6"
           >
@@ -333,8 +337,16 @@ export default function CreateTeam() {
               type="submit"
               variant="hackwarts"
               className="w-full hover:scale-100"
+              disabled={isSubmitting}
             >
-              Submit
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  Submitting...
+                </div>
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
         </Form>

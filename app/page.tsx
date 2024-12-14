@@ -13,6 +13,7 @@ import moon from "@/public/moon.png";
 import Starfield from "@/components/ui/starfield";
 import HouseBanner from "@/components/ui/house-banner";
 import NumberTicker from "@/components/ui/number-ticker";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -25,6 +26,7 @@ function Hero() {
           className="w-40 -top-14 left-1/2  md:w-60 absolute md:-top-20 md:-right-20 invert animate-sinusoidal"
         />
         <div className="w-full flex items-center gap-2 justify-center flex-wrap">
+        <Link href={"/plan"}>
           <Button
             variant="hackwarts"
             className="relative text-md font-semibold"
@@ -37,12 +39,16 @@ function Hero() {
             />
             Start casting magic
           </Button>
+          </Link>
+          <Link href={"/challenges"}>
           <Button
             variant="hackwarts"
             className="text-md font-bold bg-white text-amber-800"
+            
           >
             <Scroll /> List of challenges
           </Button>
+          </Link>
         </div>
       </div>
     </div>
