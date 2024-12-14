@@ -87,5 +87,4 @@ const seedDataBase = async () => {
   // console.log("Seeded Submissions:", submissions);
 };
 
-seedDataBase();
 export default seedDataBase;
