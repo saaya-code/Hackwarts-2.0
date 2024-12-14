@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Swords, Scroll } from "lucide-react";
+import { Swords, Scroll, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import baroqueBorder from "@/public/baroqueborder.png";
 import goldenball from "@/public/goldenball.png";
@@ -173,9 +173,9 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           <p className="text-licorice mb-4">{challenge.description}</p>
           <Link
             href={challenge.link || "#"}
-            className="text-licorice mb-3 hover:underline"
+            className="text-licorice mb-3 hover:underline font-bold"
           >
-            {challenge.link}
+            <span className="flex underline">              <ArrowUpRight/> More details  </span>
           </Link>
           <p className="text-sm font-bold text-licorice">
             Prize: {challenge.prize}
