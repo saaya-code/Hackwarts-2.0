@@ -24,8 +24,13 @@ export function SubmitForm({challenge, submissionCount, teamId}: SubmitFormProps
     const router = useRouter();
     const [error, setError] = useState("");
     const [showErrorDialog, setShowErrorDialog] = useState(false);
-    const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  
     const handleSubmit = async (e: React.FormEvent) => {
+      if (!submissionUrl) {
+        setError("Please provide a Github repository URL.");
+        return;
+      }
       e.preventDefault();
       setLoading(true);
       try {
@@ -48,10 +53,10 @@ export function SubmitForm({challenge, submissionCount, teamId}: SubmitFormProps
 
         } else {
             setShowErrorDialog(true)
-          setError("Something went wrong. Please try again later.");
+          setError("Something went wrong. Please contact one of GDGC members");
         }
       } catch (error) {
-        setError("Something went wrong. Please try again later.");
+        setError("Something went wrong. Please contact one of GDGC members");
       }
       setLoading(false);
     }
@@ -140,15 +145,15 @@ export function SubmitForm({challenge, submissionCount, teamId}: SubmitFormProps
             setShowSuccessDialog(false)
             router.push("/challenges")
         }}
-        message="Challenge submission was successful"
+        message="Challenge submission was successful."
         title="Magic Spell Result"
         />
         <SuccessDialog isOpen={showErrorDialog} onClose={()=>{
             setShowErrorDialog(false)
             router.push("/challenges")
         }}
-        message="Challenge submission failed"
-        title="Magic Spell Result"
+        message={error}
+        title="Magic Spell Error"
         />
       </div>
     </div>

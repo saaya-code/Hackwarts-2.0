@@ -172,7 +172,7 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
           </p>
           <p className="text-licorice mb-4">{challenge.description}</p>
           <Link
-            href={challenge.link}
+            href={challenge.link || "#"}
             className="text-licorice mb-3 hover:underline"
           >
             {challenge.link}
