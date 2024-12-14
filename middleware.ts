@@ -18,7 +18,6 @@ export default auth(async (req) => {
     "/profile",
     "/create-team",
     "/submission",
-    "/teamprofile"
   ];
 
   const isProtectedRoute = protectedRoutes.some((route) =>
