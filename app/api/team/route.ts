@@ -1,23 +1,16 @@
 import { Team } from "@/app/models/Team";
 import { connectToDatabase } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import getServerSession from "next-auth"
+import { config } from "@/app/auth.config";
 
 export async function GET(request: Request) {
-  // get leader team id
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET,
-  });
-  if (!token?.email) {
-    return NextResponse.json({
-      message: "There was a problem verifying the user.",
-    });
-  }
+  const aa =  getServerSession(config);
+  const session = await aa.auth();
 
   await connectToDatabase();
   const team = await Team.findOne({
-    leader_email: token.email,
+    leader_email: session?.user?.email,
   });
   console.log(team);
   if (!team) {
