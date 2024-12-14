@@ -1,11 +1,11 @@
 "use client";
+import { useTeamCheck } from "@/hooks/useTeamCheck";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useTeamCheck } from "@/hooks/useTeamCheck";
 
-import { Loader, LogIn, Menu, Swords, Users, X } from "lucide-react";
+import { Book, Loader, LogIn, Menu, Swords, Users, X } from "lucide-react";
 
 import baroqueBorder from "@/public/baroqueborder.png";
 import hackwartsLogo from "@/public/logo.png";
@@ -87,6 +87,21 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             <Users className="w-6 h-6" /> Register Team
           </Link>
         )}
+        <Link
+          className={cn(
+            "w-full",
+            buttonVariants({
+              variant: "hackwarts",
+              size: "lg",
+              className: "mb-4",
+            }),
+            "bg-[#6f2f2a] text-yellow-400 "
+          )}
+          href="/plan"
+          onClick={onClose}
+        >
+          <Book className="w-6 h-6" /> Plan
+        </Link>
         <Button
           variant="hackwarts"
           className="bg-amber-600 text-amber-950 w-full mb-4"
@@ -148,6 +163,12 @@ const Navbar = () => {
             <Loader className="w-6 h-6 animate-spin" />
           ) : status === "unauthenticated" ? (
             <>
+              <Link href="/plan">
+                <Button variant="hackwarts">
+                  <Book className="w-4 h-4" />
+                  Plan
+                </Button>
+              </Link>
               <Link href="/register">
                 <Button variant="hackwarts">
                   <Users className="w-4 h-4" />
@@ -167,6 +188,12 @@ const Navbar = () => {
               {status === "authenticated" &&
                 (hasTeam ? (
                   <>
+                    <Link href="/plan">
+                      <Button variant="hackwarts">
+                        <Book className="w-4 h-4" />
+                        Plan
+                      </Button>
+                    </Link>
                     <Link href="/challenges">
                       <Button variant="hackwarts">
                         <Swords className="w-4 h-4" />
@@ -181,12 +208,20 @@ const Navbar = () => {
                     </Link>
                   </>
                 ) : (
-                  <Link href="/create-team">
-                    <Button variant="hackwarts">
-                      <Users className="w-4 h-4" />
-                      Create Team
-                    </Button>
-                  </Link>
+                  <>
+                    <Link href="/plan">
+                      <Button variant="hackwarts">
+                        <Book className="w-4 h-4" />
+                        Plan
+                      </Button>
+                    </Link>
+                    <Link href="/create-team">
+                      <Button variant="hackwarts">
+                        <Users className="w-4 h-4" />
+                        Create Team
+                      </Button>
+                    </Link>
+                  </>
                 ))}
               <Button
                 variant="hackwarts"
