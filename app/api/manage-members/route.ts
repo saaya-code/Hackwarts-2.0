@@ -1,8 +1,8 @@
 import { Team } from "@/app/models/Team";
 import { connectToDatabase } from "@/lib/mongodb";
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-
+import getServerSession from "next-auth"
+import { config } from "@/app/auth.config";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const teamId = searchParams.get("teamId");
@@ -29,22 +29,12 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const { name, email } = await request.json();
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET,
-  });
-  if (!token) {
-    return NextResponse.json(
-      { message: "Unauthorized" },
-      {
-        status: 401, // Unauthorized
-      }
-    );
-  }
+  const aa =  getServerSession(config);
+  const session = await aa.auth();
 
   await connectToDatabase();
   const team = await Team.findOne({
-    leader_email: token?.email,
+    leader_email: session?.user?.email,
   });
   if (!team) {
     return NextResponse.json(
@@ -89,22 +79,12 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const email = new URL(request.url).searchParams.get("email");
-  const token = await getToken({
-    req: request,
-    secret: process.env.AUTH_SECRET,
-  });
-  if (!token) {
-    return NextResponse.json(
-      { message: "Unauthorized" },
-      {
-        status: 401, // Unauthorized
-      }
-    );
-  }
+  const aa =  getServerSession(config);
+  const session = await aa.auth()
 
   await connectToDatabase();
   const team = await Team.findOne({
-    leader_email: token.email,
+    leader_email: session?.user?.email,
   });
   if (!team) {
     return NextResponse.json(
